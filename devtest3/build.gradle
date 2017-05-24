@@ -1,56 +1,40 @@
-apply plugin: 'java'
-apply plugin: 'eclipse'
-apply plugin: 'application'
+// 하위프로젝트 공통적용
+subprojects{
+	apply plugin: 'java'
+	apply plugin: 'eclipse'
+	apply plugin: 'application'
 
-
-sourceCompatibility = 1.8
-version = '1.0'
-
-tasks.withType(JavaCompile) {
+	// 1.1 인코딩은 UTF-8로 지정하시오
+	tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
-}
+	}
+	
+	javadoc {
+    options.encoding = 'utf-8'
+	}
+	
 
-
-jar {
-	mainClassName = 'kr.or.dgit.devtest1.main.Main'
-
-    manifest {
-        attributes 'Implementation-Title': 'DevTest3(Final)',
-                   'Implementation-Version': version
-    }
-    
-    dependsOn configurations.runtime     
-    
-}
-
-javadoc {
-    options.encoding = 'utf-8'//  destinationDir = '${buildDir}/dist/javadoc' //  title = '${baseName} ${version}'
-}
-
-repositories {
+	sourceCompatibility = 1.8
+	version = '1.0'
+	
+	
+	jar{
+		manifest.attributes provider : 'gradle'
+	}
+	
+	repositories {
     mavenCentral()
-}
+	}
 
-dependencies {
-    // https://mvnrepository.com/artifact/mysql/mysql-connector-java
-    compile group: 'mysql', name: 'mysql-connector-java', version: '5.1.40'
-    // https://mvnrepository.com/artifact/log4j/log4j
+	dependencies {
+    // 1.2 Major버전이 5에서 가장 최근 것을 다운받도록 설정하시오.
+    compile group: 'mysql', name: 'mysql-connector-java', version: '5.+'
+    // 1.2.17버전을 다운받도록 설정하시오
     compile group: 'log4j', name: 'log4j', version: '1.2.17'
     //compile group: 'commons-collections', name: 'commons-collections', version: '3.2'
     testCompile group: 'junit', name: 'junit', version: '4.+'
     compile group: 'org.projectlombok', name: 'lombok', version: '1.16.16'
     compile group: 'commons-collections', name: 'commons-collections', version: '3.2'
     testCompile group: 'junit', name: 'junit', version: '4.+'
-}
-
-test {
-    systemProperties 'property': 'value'
-}
-
-uploadArchives {
-    repositories {
-       flatDir {
-           dirs 'repos'
-       }
-    }
+	}
 }
