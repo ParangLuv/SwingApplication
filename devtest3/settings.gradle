@@ -1,0 +1,3 @@
+rootProject.name = "devtest3"
+include "SettingUi"
+include "EPR-Application"

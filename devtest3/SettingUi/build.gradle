@@ -1,0 +1,44 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'application'
+
+sourceCompatibility = 1.8
+//인코딩 지정
+tasks.withType(JavaCompile) {
+	options.encoding = 'UTF-8'
+}
+
+version = '1.0'
+jar {
+	mainClassName = 'com.dgit.department.SettingUI'
+    manifest {
+        attributes 'Implementation-Title': 'Department',
+                   'Implementation-Version': version
+    }
+    archiveName 'SettingUI-bin-'+version+'.jar'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+	// https://mvnrepository.com/artifact/mysql/mysql-connector-java
+	compile group: 'mysql', name: 'mysql-connector-java', version: '5.+'//5 version 중 가장 최신의 것
+    // https://mvnrepository.com/artifact/log4j/log4j
+	compile group: 'log4j', name: 'log4j', version: '1.2.17'
+	
+    testCompile group: 'junit', name: 'junit', version: '4.+'
+}
+
+test {
+    systemProperties 'property': 'value'
+}
+
+uploadArchives {
+    repositories {
+       flatDir {
+           dirs 'repos'
+       }
+    }
+}
